@@ -26,7 +26,7 @@ class MarkovChain:
                 except IndexError:
                     pass
 
-    def generate(self,):
+    def generate(self):
 
         curGram = r.choice(self.gateways)
         markovText = curGram
