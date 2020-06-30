@@ -18,7 +18,8 @@ print("Fetching sample tweets...")
 userIDs = ["lisajpgs", "lalisarchive", "archivelisas", "lxsapics"]
 tweets = []
 for userID in userIDs:
-    tweets.extend(api.user_timeline(id=userID, count=200))
+    for item in tweepy.Cursor(api.user_timeline, id=userID).items():
+        tweets.append(item)
     print(f"--Tweets from @{userID} fetched!")
 
 # Loop through the tweets and append to "samples" list
@@ -49,7 +50,10 @@ for text in [t.text for t in tweets]:
             pass
         else:
             samples.append(text+" (end)")
-
+print("\nTotal fetched:", len(tweets))
+print("Tweets filtered:", len(tweets)-len(samples))
+print("Sample size:", len(samples))
+            
 # Set up Markov Chain n-grams
 print("Initializing n-gram dictionary...")
 markov = markovClass.MarkovChain()
