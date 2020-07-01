@@ -19,10 +19,8 @@ class MarkovChain:
             # Get all n-grams and their possible continuations
             for i, item in enumerate(sample[:-self.order+1]):
                 gram = " ".join(sample[i:i+self.order])
-                if gram not in self.memory:
-                    self.memory.update({gram: []})
                 try:
-                    self.memory[gram].append(sample[i+self.order])
+                    self.memory.setdefault(gram, []).append(sample[i+self.order])
                 except IndexError:
                     pass
 
